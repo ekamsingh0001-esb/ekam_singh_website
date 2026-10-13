@@ -70,11 +70,23 @@ ALL VERIFIED SOFTWARE PROJECTS & EXACT REPOSITORIES:
    - Tech Stack: WebGL 2, GLSL Shaders, Three.js, React, TypeScript, Tailwind CSS
    - Functionality: Experimental generative canvas with real-time WebGL fluid shader displacement, RGB chromatic aberration splitting, pointer velocity tracking, and reactive neural network node visualization running at a smooth 60 FPS.
 
-6. Cognitive Vision & Neural Model Experimentation
-   - Category: Personal Experiments
-   - Repository: https://github.com/Vedant-Rajgaria/Tick.git
-   - Tech Stack: Python, OpenCV, TensorFlow, Convolutional Nets, Edge Inference
-   - Functionality: Research pipeline developed during the Jr. Artificial Intelligence Scientist summer camp with Vigyantram & Enactus IIT Delhi exploring convolutional networks and edge inference.
+7. Unmix-the-Signal-ICA-
+   - Category: AI & Machine Learning / Signal Processing
+   - Repository: https://github.com/ekamsingh0001-esb/Unmix-the-Signal-ICA-.git
+   - Tech Stack: Python, FastICA from Scratch, PCA Whitening, Eigendecomposition, NumPy, SciPy / WAV Export, SDR Metrics
+   - Functionality: Blind audio source separation using Independent Component Analysis (FastICA) implemented strictly from scratch without third-party ICA libraries. Features three synthetic audio sources (speech-like formants, harmonic music, ambient noise), custom mixing matrix, covariance eigendecomposition whitening, and scale-aligned SDR evaluation metrics with WAV exports.
+
+8. ProxyProof-Attendance
+   - Category: App Development / Mobile Systems
+   - Repository: https://github.com/ekamsingh0001-esb/ProxyProof-Attendance.git
+   - Tech Stack: Mobile App Architecture, Bluetooth Low Energy (BLE), Hardware Device Binding, Rotating Security Tokens, Node.js REST API, Relational Database, CSV Export
+   - Functionality: A tamper-proof attendance verification platform eliminating proxy check-ins. Features organiser and student logins, dynamic rotating security tokens (TOTP / dynamic hashes), student hardware device binding, BLE proximity broadcast scaffold, attendance session lifecycle management, discrepancy corrections, and CSV export.
+
+9. website-change-detector
+   - Category: Web Development / Automation
+   - Repository: https://github.com/ekamsingh0001-esb/website-change-detector.git
+   - Tech Stack: Node.js & TypeScript, Headless Chromium / Puppeteer, Content Hashing (SHA-256), Visual Screenshot Diffs, Telegram & Discord Bots, SMTP Alerts, Retry Queues
+   - Functionality: An automated website change monitoring system featuring a watchlist dashboard, headless Chromium page checks, text extraction and full-page screenshots, SHA-256 hash tracking, side-by-side visual diffs, multi-channel alerts (Telegram, Discord, Email), and robust error handling against timeouts and bot shields.
 
 ACADEMIC JOURNEY:
 1. Mayoor School, Noida: Nursery to Class 8 (Foundational schooling where interest in computers and logic puzzles took root).
@@ -159,12 +171,53 @@ A research and computer vision pipeline conducted during the Jr. Artificial Inte
 - **Repository**: [https://github.com/Vedant-Rajgaria/Tick.git](https://github.com/Vedant-Rajgaria/Tick.git)`;
   }
 
+  if (q.includes('unmix') || q.includes('ica') || q.includes('signal') || q.includes('audio')) {
+    return `### **Unmix-the-Signal-ICA- (Blind Source Separation)**
+Unmix-the-Signal-ICA is an audio separation system engineered from scratch by Ekam in Python using FastICA without external ICA libraries.
+
+**What's Included & Key Features:**
+- **Three Synthetic Audio Sources**: Speech-like formants, harmonic music tones, and ambient noise.
+- **Custom Mixing Matrix**: Entangles audio sources into multi-channel sensor recordings.
+- **PCA Whitening**: Covariance matrix calculation and eigendecomposition for decorrelation.
+- **FastICA from Scratch**: Fixed-point negentropy gradient optimization derived without third-party ICA toolkits.
+- **WAV File Export**: Exports both mixed and separated audio streams as clean WAV files.
+- **Evaluation Metrics**: Scale-aligned SDR metrics (+14.2 dB) and Pearson correlation coefficients (r > 0.98).
+- **Repository**: [https://github.com/ekamsingh0001-esb/Unmix-the-Signal-ICA-.git](https://github.com/ekamsingh0001-esb/Unmix-the-Signal-ICA-.git)`;
+  }
+
+  if (q.includes('proxyproof') || q.includes('attendance') || q.includes('ble') || q.includes('token')) {
+    return `### **ProxyProof-Attendance (Tamper-Resistant Attendance System)**
+ProxyProof-Attendance is a zero-trust mobile presence verification platform developed by Ekam to eliminate proxy check-ins in academic and enterprise environments.
+
+**Key Features:**
+- **Organiser & Student Login**: Role-based access control and session management.
+- **Rotating Security Tokens**: Dynamic short-lived cryptographic tokens (15s rotation) preventing snapshot forwarding.
+- **Student Device Binding**: Hardware-level MAC/fingerprint locking tying student accounts to unique devices.
+- **BLE Scanning Scaffold**: Verifies physical Bluetooth Low Energy proximity within lecture halls.
+- **Organiser Dashboard**: Real-time check-in stream, manual corrections, and one-click CSV export.
+- **Repository**: [https://github.com/ekamsingh0001-esb/ProxyProof-Attendance.git](https://github.com/ekamsingh0001-esb/ProxyProof-Attendance.git)`;
+  }
+
+  if (q.includes('change') || q.includes('detector') || q.includes('monitor') || q.includes('diff')) {
+    return `### **website-change-detector (Automated Chromium Web Monitor)**
+website-change-detector is an automated web monitoring and change intelligence platform developed by Ekam.
+
+**Core Capabilities:**
+1. **Dashboard**: Add websites, set monitoring intervals (1 min to 24 hrs), view statuses, pause checks, and manage your watchlist.
+2. **Website Monitoring**: Headless Chromium checks, deep DOM text extraction, screenshots, content hashing (SHA-256), and saved versions.
+3. **Change History & Diffs**: Version timelines, textual comparisons, and side-by-side screenshot viewing.
+4. **Multi-Channel Notifications**: Instant alerts sent via Telegram Bots, Discord Webhooks, and SMTP Email upon detected changes.
+5. **Error Handling**: Timeout resilience, retry-ready queues, access-block/Cloudflare detection, URL validation, and per-domain rate spacing.
+- **Repository**: [https://github.com/ekamsingh0001-esb/website-change-detector.git](https://github.com/ekamsingh0001-esb/website-change-detector.git)`;
+  }
+
   if (q.includes('who is') || q.includes('about ekam') || q.includes('intro')) {
     return `**Ekam Singh** is a B.Tech Computer Science and Engineering student at **VIT Vellore** (Batch of 2026), originally from **South Delhi**.
 
 He specializes in:
 - **Creative Frontend & WebGL**: Interactive fluid shaders, responsive UI/UX, and typography.
-- **AI & Systems**: Offline AI, neural vision models, and enterprise RESTful services.
+- **AI & Systems**: FastICA audio decomposition, Offline AI, neural vision models, and enterprise RESTful services.
+- **App & Web Engineering**: ProxyProof attendance system and automated website change detection.
 - **Hackathons**: Rapid zero-to-one prototyping, including projects like **StudySync** and **Tick**.
 
 You can explore his work on GitHub at [github.com/ekamsingh0001-esb](https://github.com/ekamsingh0001-esb) or contact him at **ekamsingh1808@gmail.com**.`;
@@ -179,6 +232,9 @@ You can explore his work on GitHub at [github.com/ekamsingh0001-esb](https://git
 
   if (q.includes('repo') || q.includes('github') || q.includes('code') || q.includes('project')) {
     return `Here are the official repositories for Ekam's projects:
+- **Unmix-the-Signal-ICA-**: [https://github.com/ekamsingh0001-esb/Unmix-the-Signal-ICA-.git](https://github.com/ekamsingh0001-esb/Unmix-the-Signal-ICA-.git)
+- **ProxyProof-Attendance**: [https://github.com/ekamsingh0001-esb/ProxyProof-Attendance.git](https://github.com/ekamsingh0001-esb/ProxyProof-Attendance.git)
+- **website-change-detector**: [https://github.com/ekamsingh0001-esb/website-change-detector.git](https://github.com/ekamsingh0001-esb/website-change-detector.git)
 - **Tick**: [https://github.com/Vedant-Rajgaria/Tick.git](https://github.com/Vedant-Rajgaria/Tick.git)
 - **StudySync**: [https://github.com/vengala69/Vinhack.git](https://github.com/vengala69/Vinhack.git)
 - **CalmPulse**: [https://github.com/vengala69/Vinhack.git](https://github.com/vengala69/Vinhack.git)
@@ -197,7 +253,7 @@ His main GitHub profile is [github.com/ekamsingh0001-esb](https://github.com/eka
 - Or dispatch a message directly through the **Contact** page on this portfolio!`;
   }
 
-  return `Ekam Singh is a B.Tech CSE student at VIT Vellore from South Delhi, specializing in WebGL fluid shaders, full-stack software, and hackathon prototypes. He has created Tick, StudySync, CalmPulse, Offline AI, and Synapse Engine. You can reach him at ekamsingh1808@gmail.com.`;
+  return `Ekam Singh is a B.Tech CSE student at VIT Vellore from South Delhi, specializing in WebGL fluid shaders, full-stack software, FastICA signal unmixing, and hackathon prototypes. He has created Unmix-the-Signal-ICA, ProxyProof-Attendance, website-change-detector, Tick, StudySync, CalmPulse, Offline AI, and Synapse Engine. You can reach him at ekamsingh1808@gmail.com.`;
 }
 
 // AI Chatbot Endpoint with resilient Gemini model fallback

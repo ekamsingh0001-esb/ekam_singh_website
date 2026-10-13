@@ -277,6 +277,123 @@ export const PROJECTS: ProjectItem[] = [
         'Earned official certification as Jr. Artificial Intelligence Scientist from Vigyantram & Enactus IIT Delhi.',
     },
   },
+  {
+    id: 'unmix-the-signal-ica',
+    title: 'Unmix-the-Signal-ICA-',
+    category: 'ai',
+    categoryLabel: 'AI & Machine Learning',
+    status: 'Completed',
+    isFeatured: true,
+    shortDescription:
+      'Blind audio source separation using Independent Component Analysis (FastICA) implemented from scratch in Python without external ICA libraries. Generates synthetic speech, music, and ambient audio, applies a custom mixing matrix, computes PCA whitening via eigendecomposition, and recovers isolated acoustic tracks evaluated with scale-aligned SDR metrics.',
+    technologies: [
+      'Python',
+      'FastICA from Scratch',
+      'PCA Whitening',
+      'Eigendecomposition',
+      'NumPy',
+      'SciPy / WAV Export',
+      'Signal Processing',
+      'SDR Benchmarks',
+    ],
+    previewType: 'unmix-ica',
+    githubUrl: 'https://github.com/ekamsingh0001-esb/Unmix-the-Signal-ICA-.git',
+    fullCaseStudy: {
+      problem:
+        'The classic cocktail party problem: when multiple audio sources occur concurrently in an acoustic environment, sensors record an entangled superposition of sounds. Isolating individual voice, harmonic, or ambient components without knowing the transmission medium or mixing coefficients is an ill-posed blind signal separation challenge.',
+      approach:
+        'Engineered an end-to-end signal separation pipeline implementing FastICA strictly from mathematical first principles without relying on Scikit-Learn FastICA or external ICA toolkits. Designed synthetic signal models, formulated a multi-channel linear mixing matrix, performed covariance-based PCA whitening, and derived fixed-point negentropy gradient optimization.',
+      architecture: [
+        'Three distinct synthetic audio generators: speech-like formants, harmonic music waveforms, and ambient background noise',
+        'Invertible linear mixing matrix creating multi-channel entangled acoustic recordings',
+        'Covariance calculation and eigendecomposition for PCA pre-whitening and variance normalization',
+        'FastICA fixed-point negentropy iteration implemented completely from scratch',
+        'Audio export pipeline saving raw mixed and recovered separated tracks as WAV files',
+        'Correlation coefficients, scale-aligned Signal-to-Distortion Ratio (SDR) benchmarks, and waveform spectrogram plots',
+        'Comprehensive README documentation with step-by-step setup instructions and technical breakdown',
+      ],
+      outcome:
+        'Successfully separated entangled audio signals with high scale-aligned SDR metrics and strong cross-correlation to original ground-truth waveforms.',
+    },
+  },
+  {
+    id: 'proxyproof-attendance',
+    title: 'ProxyProof-Attendance',
+    category: 'app',
+    categoryLabel: 'App Development',
+    status: 'Completed',
+    isFeatured: true,
+    shortDescription:
+      'A tamper-resistant mobile attendance and presence verification platform featuring rotating cryptographic security tokens, student device hardware binding, Bluetooth Low Energy (BLE) scanning scaffold, and an organiser dashboard with CSV export.',
+    technologies: [
+      'Mobile App Architecture',
+      'Bluetooth Low Energy (BLE)',
+      'Hardware Device Binding',
+      'Rotating Security Tokens',
+      'Node.js REST API',
+      'Relational Database & Audit Logs',
+      'CSV Export Engine',
+      'Role-Based Auth',
+    ],
+    previewType: 'proxyproof-attendance',
+    githubUrl: 'https://github.com/ekamsingh0001-esb/ProxyProof-Attendance.git',
+    fullCaseStudy: {
+      problem:
+        'Traditional academic roll-calls and static QR code attendance mechanisms are vulnerable to proxy check-ins, unauthorized QR code sharing across messaging groups, and spoofed location stamps, compromising collegiate attendance integrity.',
+      approach:
+        'Architected ProxyProof with multi-tiered zero-trust presence verification: time-based rotating tokens that self-invalidate in seconds, hardware-level student device binding, and a BLE proximity broadcast scaffold verifying physical lecture-hall presence.',
+      architecture: [
+        'Organiser and student login portals with separate role-based capabilities and session keys',
+        'Attendance session lifecycle manager with real-time session creation, live token stream, and automatic closure',
+        'Rotating security tokens (TOTP / dynamic hashes) eliminating snapshot forwarding or proxy check-ins',
+        'Student device binding linking each student account to a unique physical mobile hardware fingerprint',
+        'Bluetooth Low Energy (BLE) scanning scaffold verifying physical device proximity within the room',
+        'Real-time organiser dashboard supporting manual discrepancy adjustments and session tracking',
+        'Historical attendance logs and one-click export to CSV spreadsheets for faculty administration',
+        'Backend RESTful API and relational database setup handling concurrent student check-in transactions',
+      ],
+      outcome:
+        'Eliminated proxy attendance opportunities while shrinking classroom attendance time to under 15 seconds per session.',
+    },
+  },
+  {
+    id: 'website-change-detector',
+    title: 'website-change-detector',
+    category: 'web',
+    categoryLabel: 'Web Development',
+    status: 'Completed',
+    isFeatured: true,
+    shortDescription:
+      'An automated web monitoring platform using headless Chromium to track visual and textual modifications across target URLs. Features content hashing, side-by-side screenshot diffs, configurable check intervals, robust anti-block error handling, and multi-channel alerts (Telegram, Discord, Email).',
+    technologies: [
+      'Node.js & TypeScript',
+      'Headless Chromium Engine',
+      'DOM Text Extraction',
+      'Full-Page Screenshot Diffs',
+      'Content Hashing (SHA-256)',
+      'Watchlist Dashboard',
+      'Telegram & Discord Bots',
+      'SMTP Email Alerts',
+      'Resilient Retry Handling',
+    ],
+    previewType: 'website-change-detector',
+    githubUrl: 'https://github.com/ekamsingh0001-esb/website-change-detector.git',
+    fullCaseStudy: {
+      problem:
+        'Monitoring critical web changes across price trackers, competitor pages, academic portals, and regulatory notices manually is slow and error-prone. Standard HTTP scrapers fail on JavaScript-heavy SPAs and get blocked by modern bot shields.',
+      approach:
+        'Engineered an end-to-end change detection system featuring headless Chromium execution for complete DOM rendering, perceptual and cryptographic content diffing, customizable polling schedules, and immediate multi-channel notification dispatch.',
+      architecture: [
+        'Central Watchlist Dashboard: Add websites, set custom monitoring intervals (1 min to 24 hrs), pause checks, and monitor status',
+        'Headless Chromium monitoring: Deep JS rendering, page text extraction, visual full-page snapshots, and SHA-256 content hashing',
+        'Change history & diff visualizer: Version timelines, side-by-side screenshot comparison, and colored text diff highlighting',
+        'Multi-channel notification engine: Instant alerts to Telegram bots, Discord webhooks, and email channels on detected changes',
+        'Enterprise-grade error handling: Request timeouts, retry-ready queues, access-block/Cloudflare detection, URL validation, and per-domain rate pacing',
+      ],
+      outcome:
+        'Delivered 24/7 autonomous website change intelligence with zero false positives from transient layout shifts.',
+    },
+  },
 ];
 
 export const CERTIFICATES: CertificateItem[] = [

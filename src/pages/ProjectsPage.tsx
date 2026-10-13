@@ -19,6 +19,10 @@ import {
   Eye,
   Activity,
   ArrowRight,
+  Waves,
+  Radio,
+  Smartphone,
+  Globe,
 } from 'lucide-react';
 
 interface ProjectsPageProps {
@@ -33,9 +37,10 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({
 
   const categories: { id: ProjectCategory; label: string; count: number }[] = [
     { id: 'all', label: 'All Projects', count: PROJECTS.length },
+    { id: 'ai', label: 'AI & Software', count: PROJECTS.filter((p) => p.category === 'ai').length },
+    { id: 'app', label: 'App Development', count: PROJECTS.filter((p) => p.category === 'app').length },
     { id: 'web', label: 'Web Development', count: PROJECTS.filter((p) => p.category === 'web').length },
     { id: 'hackathon', label: 'Hackathons', count: PROJECTS.filter((p) => p.category === 'hackathon').length },
-    { id: 'ai', label: 'AI & Software', count: PROJECTS.filter((p) => p.category === 'ai').length },
     { id: 'experiments', label: 'Personal Experiments', count: PROJECTS.filter((p) => p.category === 'experiments').length },
   ];
 
@@ -205,6 +210,119 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({
             <div className="flex justify-between font-mono-code text-[10px] text-[#6b7280]">
               <span>LATENCY: 12ms</span>
               <span className="text-indigo-300">ARCH: EDGE_CONVNET</span>
+            </div>
+          </div>
+        );
+
+      case 'unmix-the-signal-ica':
+        return (
+          <div className="w-full lg:w-84 h-56 sm:h-64 rounded-2xl glass-sub-box p-5 flex flex-col justify-between relative overflow-hidden shrink-0 shadow-lg group-hover:border-cyan-400/60 transition-all">
+            <div className="flex justify-between items-center font-mono-code text-[11px] text-[#6b7280]">
+              <span className="text-cyan-300 font-bold flex items-center gap-1">
+                <Waves className="w-3.5 h-3.5 text-cyan-400" /> FASTICA_AUDIO_DECOMP
+              </span>
+              <span className="text-emerald-400 font-mono-code">SDR: +14.2 dB</span>
+            </div>
+
+            <div className="flex flex-col items-center justify-center py-2 space-y-2">
+              <div className="flex items-center gap-2 w-full justify-center">
+                <div className="flex flex-col items-center">
+                  <div className="flex items-end gap-1 h-12">
+                    <span className="w-1.5 bg-cyan-400 rounded-full h-8 animate-pulse" />
+                    <span className="w-1.5 bg-cyan-300 rounded-full h-12" />
+                    <span className="w-1.5 bg-cyan-500 rounded-full h-6 animate-pulse" />
+                  </div>
+                  <span className="text-[8px] font-mono-code text-[#9ca3af] mt-1">SPEECH</span>
+                </div>
+                <span className="text-xs font-mono-code text-cyan-400 font-bold">+</span>
+                <div className="flex flex-col items-center">
+                  <div className="flex items-end gap-1 h-12">
+                    <span className="w-1.5 bg-indigo-400 rounded-full h-10" />
+                    <span className="w-1.5 bg-indigo-300 rounded-full h-6 animate-pulse" />
+                    <span className="w-1.5 bg-indigo-500 rounded-full h-11" />
+                  </div>
+                  <span className="text-[8px] font-mono-code text-[#9ca3af] mt-1">MUSIC</span>
+                </div>
+                <span className="text-xs font-mono-code text-cyan-400 font-bold">+</span>
+                <div className="flex flex-col items-center">
+                  <div className="flex items-end gap-1 h-12">
+                    <span className="w-1.5 bg-purple-400 rounded-full h-5 animate-pulse" />
+                    <span className="w-1.5 bg-purple-300 rounded-full h-7" />
+                    <span className="w-1.5 bg-purple-500 rounded-full h-4" />
+                  </div>
+                  <span className="text-[8px] font-mono-code text-[#9ca3af] mt-1">AMBIENT</span>
+                </div>
+              </div>
+              <div className="px-2.5 py-1 rounded bg-[#101424] border border-cyan-400/30 text-[9px] font-mono-code text-cyan-300 text-center">
+                PCA WHITENING → FASTICA SCRATCH
+              </div>
+            </div>
+
+            <div className="flex justify-between font-mono-code text-[10px] text-[#6b7280]">
+              <span>MIX_MATRIX: 3×3</span>
+              <span className="text-cyan-300">SEPARATED: 3 SOURCES</span>
+            </div>
+          </div>
+        );
+
+      case 'proxyproof-attendance':
+        return (
+          <div className="w-full lg:w-84 h-56 sm:h-64 rounded-2xl glass-sub-box p-5 flex flex-col justify-between relative overflow-hidden shrink-0 shadow-lg group-hover:border-cyan-400/60 transition-all">
+            <div className="flex justify-between items-center font-mono-code text-[11px] text-[#6b7280]">
+              <span className="text-emerald-300 font-bold flex items-center gap-1">
+                <Radio className="w-3.5 h-3.5 text-emerald-400 animate-pulse" /> PROXYPROOF_BLE
+              </span>
+              <span className="text-cyan-300 font-mono-code">TOKEN: 15s ROTATE</span>
+            </div>
+
+            <div className="flex items-center justify-center py-2">
+              <div className="relative flex items-center justify-center">
+                <div className="w-20 h-20 rounded-full border border-emerald-400/30 flex items-center justify-center bg-emerald-500/10 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                  <Smartphone className="w-8 h-8 text-emerald-400" />
+                </div>
+                <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-cyan-400 text-[#07080d] font-bold text-[9px] font-mono-code flex items-center justify-center shadow">
+                  OK
+                </div>
+                <div className="w-28 h-28 rounded-full border border-emerald-400/20 absolute animate-ping [animation-duration:4s]" />
+              </div>
+            </div>
+
+            <div className="flex justify-between font-mono-code text-[10px] text-[#6b7280]">
+              <span>DEVICE_BINDING: VERIFIED</span>
+              <span className="text-emerald-400">PROXY_CHECK: PREVENTED</span>
+            </div>
+          </div>
+        );
+
+      case 'website-change-detector':
+        return (
+          <div className="w-full lg:w-84 h-56 sm:h-64 rounded-2xl glass-sub-box p-5 flex flex-col justify-between relative overflow-hidden shrink-0 shadow-lg group-hover:border-cyan-400/60 transition-all">
+            <div className="flex justify-between items-center font-mono-code text-[11px] text-[#6b7280]">
+              <span className="text-cyan-300 font-bold flex items-center gap-1">
+                <Globe className="w-3.5 h-3.5 text-cyan-400" /> CHROMIUM_DIFF_WATCH
+              </span>
+              <span className="text-emerald-400 font-bold">24/7 ACTIVE</span>
+            </div>
+
+            <div className="flex flex-col items-center justify-center py-2 space-y-2">
+              <div className="w-full max-w-[200px] p-2.5 rounded-xl bg-[#0f1322] border border-cyan-400/30 space-y-1.5 shadow-md">
+                <div className="flex items-center justify-between text-[9px] font-mono-code">
+                  <span className="text-cyan-300 font-bold truncate">target-page.com</span>
+                  <span className="text-amber-400">DIFF DETECTED</span>
+                </div>
+                <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-cyan-400 to-indigo-500 w-3/4 animate-pulse" />
+                </div>
+                <div className="flex items-center justify-between text-[8px] font-mono-code text-[#6b7280]">
+                  <span>SHA-256 HASH DIFF</span>
+                  <span className="text-cyan-400">DISCORD/TG SENT</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-between font-mono-code text-[10px] text-[#6b7280]">
+              <span>INTERVAL: CONFIGURABLE</span>
+              <span className="text-cyan-300">RETRIES: AUTO_EXP</span>
             </div>
           </div>
         );

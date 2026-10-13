@@ -21,12 +21,12 @@ export interface InterestVector {
   gradient: string;
 }
 
-export type ProjectCategory = 'all' | 'web' | 'ai' | 'hackathon' | 'experiments';
+export type ProjectCategory = 'all' | 'web' | 'app' | 'ai' | 'hackathon' | 'experiments';
 
 export interface ProjectItem {
   id: string;
   title: string;
-  category: 'web' | 'ai' | 'hackathon' | 'experiments';
+  category: 'web' | 'app' | 'ai' | 'hackathon' | 'experiments';
   categoryLabel: string;
   status: 'In Progress' | 'Completed' | 'Research Prototype';
   shortDescription: string;

@@ -18,6 +18,12 @@ import {
   WifiOff,
   ShieldCheck,
   Terminal,
+  Waves,
+  Radio,
+  Smartphone,
+  Globe,
+  Download,
+  RefreshCw,
 } from 'lucide-react';
 
 interface ProjectModalProps {
@@ -35,6 +41,19 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
   const [offlinePrompt, setOfflinePrompt] = useState('Explain how local quantized models run without cloud APIs');
   const [offlineResponse, setOfflineResponse] = useState<string | null>(null);
   const [isOfflineInferencing, setIsOfflineInferencing] = useState(false);
+
+  // States for new project simulators
+  const [isUnmixing, setIsUnmixing] = useState(false);
+  const [unmixDone, setUnmixDone] = useState(false);
+
+  const [currentToken, setCurrentToken] = useState('PRX-8419-B7');
+  const [deviceBound, setDeviceBound] = useState(true);
+  const [checkedInCount, setCheckedInCount] = useState(48);
+  const [justCheckedIn, setJustCheckedIn] = useState(false);
+
+  const [monitorInterval, setMonitorInterval] = useState('5 minutes');
+  const [isCheckingSite, setIsCheckingSite] = useState(false);
+  const [checkResult, setCheckResult] = useState<string | null>(null);
 
   if (!project) return null;
 
@@ -322,6 +341,265 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             <div className="pt-2 flex items-center justify-between text-[11px] font-mono-code text-[#6b7280] border-t border-white/[0.06]">
               <span>QUANTIZATION: 4-BIT GGUF/ONNX</span>
               <span className="text-emerald-400">PRIVACY: 100% LOCAL DISK</span>
+            </div>
+          </div>
+        )}
+
+        {/* Unmix-the-Signal-ICA Simulator */}
+        {project.previewType === 'unmix-ica' && (
+          <div className="p-4 sm:p-5 rounded-2xl glass-sub-box border border-cyan-400/30 space-y-4">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div className="flex items-center gap-2">
+                <Waves className="w-4 h-4 text-cyan-400" />
+                <span className="font-heading font-bold text-xs text-[#e3e2e8] uppercase">
+                  FastICA Audio Separation Simulator (From Scratch)
+                </span>
+              </div>
+              <span className="font-mono-code text-[11px] text-cyan-300">
+                BLIND SOURCE SEPARATION // 3 CHANNELS
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs font-mono-code">
+                <div className="p-2.5 rounded-xl bg-[#0f1322] border border-cyan-400/20">
+                  <span className="text-[10px] text-[#9ca3af] block">SOURCE 1</span>
+                  <span className="text-cyan-300 font-bold">Synthetic Speech</span>
+                  <span className="text-[10px] text-[#6b7280] block mt-1">Formant harmonics (220–880 Hz)</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-[#0f1322] border border-indigo-400/20">
+                  <span className="text-[10px] text-[#9ca3af] block">SOURCE 2</span>
+                  <span className="text-indigo-300 font-bold">Synthetic Music</span>
+                  <span className="text-[10px] text-[#6b7280] block mt-1">Chords & sinusoidal tones</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-[#0f1322] border border-purple-400/20">
+                  <span className="text-[10px] text-[#9ca3af] block">SOURCE 3</span>
+                  <span className="text-purple-300 font-bold">Ambient Noise</span>
+                  <span className="text-[10px] text-[#6b7280] block mt-1">Stationary pink noise texture</span>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/10">
+                <div className="font-mono-code text-xs">
+                  <span className="text-[#9ca3af] block text-[10px]">MIXING MATRIX:</span>
+                  <span className="text-cyan-300 font-bold">A = [ [0.6, 0.3, 0.1], [0.2, 0.7, 0.1], [0.3, 0.2, 0.5] ]</span>
+                </div>
+                <button
+                  onClick={() => {
+                    audioTelemetry.playClick(600, 0.04);
+                    setIsUnmixing(true);
+                    setUnmixDone(false);
+                    setTimeout(() => {
+                      setIsUnmixing(false);
+                      setUnmixDone(true);
+                      audioTelemetry.playChime(440, 660, 'triangle', 0.15);
+                    }, 600);
+                  }}
+                  disabled={isUnmixing}
+                  className="px-4 py-2 rounded-xl glass-btn-primary font-mono-code text-xs font-bold active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+                >
+                  {isUnmixing ? 'Computing Negentropy...' : 'Run Scratch FastICA'}
+                </button>
+              </div>
+
+              {unmixDone && (
+                <div className="p-3 rounded-xl glass-card border border-emerald-400/30 text-xs font-mono-code text-emerald-300 space-y-1.5 animate-in fade-in duration-300">
+                  <div className="flex items-center justify-between text-[11px] font-bold">
+                    <span className="text-emerald-400">✓ FASTICA CONVERGED IN 17 ITERATIONS</span>
+                    <span className="text-cyan-300">WAV FILES EXPORTED</span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[11px]">
+                    <div className="p-1.5 rounded bg-black/40">
+                      <span className="text-[#9ca3af] block text-[10px]">SPEECH_SDR:</span>
+                      <span className="text-emerald-400 font-bold">+15.4 dB (r=0.989)</span>
+                    </div>
+                    <div className="p-1.5 rounded bg-black/40">
+                      <span className="text-[#9ca3af] block text-[10px]">MUSIC_SDR:</span>
+                      <span className="text-emerald-400 font-bold">+14.2 dB (r=0.984)</span>
+                    </div>
+                    <div className="p-1.5 rounded bg-black/40">
+                      <span className="text-[#9ca3af] block text-[10px]">AMBIENT_SDR:</span>
+                      <span className="text-emerald-400 font-bold">+13.8 dB (r=0.978)</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="pt-2 flex items-center justify-between text-[11px] font-mono-code text-[#6b7280] border-t border-white/[0.06]">
+              <span>WHITENING: PCA EIGEN</span>
+              <span className="text-cyan-400">ZERO ICA LIBRARY DEPENDENCY</span>
+            </div>
+          </div>
+        )}
+
+        {/* ProxyProof-Attendance Simulator */}
+        {project.previewType === 'proxyproof-attendance' && (
+          <div className="p-4 sm:p-5 rounded-2xl glass-sub-box border border-cyan-400/30 space-y-4">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div className="flex items-center gap-2">
+                <Radio className="w-4 h-4 text-emerald-400 animate-pulse" />
+                <span className="font-heading font-bold text-xs text-[#e3e2e8] uppercase">
+                  ProxyProof Anti-Proxy Attendance Session Engine
+                </span>
+              </div>
+              <span className="font-mono-code text-[11px] text-emerald-400">
+                SESSION: ACTIVE // VIT CSE
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono-code">
+              <div className="p-3 rounded-xl bg-[#0f1322] border border-cyan-400/20 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-[#9ca3af]">ROTATING SECURITY TOKEN</span>
+                  <button
+                    onClick={() => {
+                      audioTelemetry.playClick(700, 0.03);
+                      setCurrentToken(`PRX-${Math.floor(1000 + Math.random() * 9000)}-${['A1', 'B7', 'C4', 'D9'][Math.floor(Math.random() * 4)]}`);
+                    }}
+                    className="text-[10px] text-cyan-400 hover:underline flex items-center gap-1 cursor-pointer"
+                  >
+                    <RefreshCw className="w-3 h-3" /> Rotate
+                  </button>
+                </div>
+                <div className="font-mono-code text-xl font-extrabold text-cyan-300 tracking-wider">
+                  {currentToken}
+                </div>
+                <div className="text-[10px] text-[#6b7280]">
+                  Time-to-expire: 15s • Self-invalidating hash
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-[#0f1322] border border-emerald-400/20 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-[#9ca3af]">STUDENT DEVICE BINDING</span>
+                  <span className="text-[10px] text-emerald-400 font-bold">HARDWARE LOCKED</span>
+                </div>
+                <div className="font-mono-code text-sm text-[#e3e2e8] flex items-center gap-2">
+                  <Smartphone className="w-4 h-4 text-emerald-400" />
+                  <span>UUID: 4a8f-92c1-d07b</span>
+                </div>
+                <div className="text-[10px] text-[#6b7280]">
+                  BLE RSSI: -48 dBm (Classroom Proximity Verified)
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
+              <div className="flex items-center gap-2 font-mono-code text-xs">
+                <span className="text-[#9ca3af]">Verified Students:</span>
+                <span className="text-emerald-400 font-bold">{checkedInCount} / 50</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => {
+                    audioTelemetry.playClick(580, 0.04);
+                    setCheckedInCount((prev) => prev + 1);
+                    setJustCheckedIn(true);
+                    audioTelemetry.playChime(500, 750, 'sine', 0.1);
+                    setTimeout(() => setJustCheckedIn(false), 2000);
+                  }}
+                  className="px-3.5 py-1.5 rounded-xl glass-btn-primary font-mono-code text-xs font-bold active:scale-95 transition-all cursor-pointer"
+                >
+                  {justCheckedIn ? '✓ Student Checked In!' : 'Simulate Check-In'}
+                </button>
+
+                <button
+                  onClick={() => {
+                    audioTelemetry.playClick(440, 0.04);
+                    const csvContent = "data:text/csv;charset=utf-8,Student_ID,Name,Timestamp,Device_Bound,BLE_Verified,Status\n22BCE1001,Ekam Singh,10:02:15,YES,YES,PRESENT\n22BCE1002,Rahul V.,10:02:29,YES,YES,PRESENT\n";
+                    const encodedUri = encodeURI(csvContent);
+                    const link = document.createElement("a");
+                    link.setAttribute("href", encodedUri);
+                    link.setAttribute("download", "ProxyProof_Attendance_Session.csv");
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                  }}
+                  className="px-3 py-1.5 rounded-xl glass-btn font-mono-code text-xs text-[#cbd5e1] hover:text-[#e3e2e8] flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Download className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Export CSV</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="pt-2 flex items-center justify-between text-[11px] font-mono-code text-[#6b7280] border-t border-white/[0.06]">
+              <span>ORGANISER DASHBOARD: CONNECTED</span>
+              <span className="text-emerald-400">PROXY PREVENTION: 100%</span>
+            </div>
+          </div>
+        )}
+
+        {/* Website Change Detector Simulator */}
+        {project.previewType === 'website-change-detector' && (
+          <div className="p-4 sm:p-5 rounded-2xl glass-sub-box border border-cyan-400/30 space-y-4">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div className="flex items-center gap-2">
+                <Globe className="w-4 h-4 text-cyan-400" />
+                <span className="font-heading font-bold text-xs text-[#e3e2e8] uppercase">
+                  Website Change Detector & Multi-Channel Alert Engine
+                </span>
+              </div>
+              <span className="font-mono-code text-[11px] text-cyan-300">
+                HEADLESS CHROMIUM // HASH DIFF
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="text"
+                  readOnly
+                  value="https://vit.ac.in/academics/exam-schedule-notices"
+                  className="flex-1 glass-input rounded-xl px-3.5 py-2 text-xs text-[#e3e2e8] font-mono-code"
+                />
+                <select
+                  value={monitorInterval}
+                  onChange={(e) => setMonitorInterval(e.target.value)}
+                  className="bg-[#141724] border border-white/10 rounded-xl px-3 py-2 text-cyan-300 text-xs font-mono-code focus:outline-none"
+                >
+                  <option>1 minute</option>
+                  <option>5 minutes</option>
+                  <option>15 minutes</option>
+                  <option>1 hour</option>
+                  <option>24 hours</option>
+                </select>
+                <button
+                  onClick={() => {
+                    audioTelemetry.playClick(640, 0.04);
+                    setIsCheckingSite(true);
+                    setCheckResult(null);
+                    setTimeout(() => {
+                      setIsCheckingSite(false);
+                      setCheckResult(
+                        'Chromium snapshot captured. SHA-256 hash modified: [3d8a... → 9e1f...]. Visual diff detected in section "#exam-notice-2026". Dispatched alerts to Telegram Bot (@EkamNotifyBot) and Discord Webhook (#dev-alerts).'
+                      );
+                      audioTelemetry.playChime(520, 780, 'sine', 0.12);
+                    }, 500);
+                  }}
+                  disabled={isCheckingSite}
+                  className="px-4 py-2 rounded-xl glass-btn-primary font-mono-code text-xs font-bold active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+                >
+                  {isCheckingSite ? 'Checking Headless DOM...' : 'Trigger Headless Check'}
+                </button>
+              </div>
+
+              {checkResult && (
+                <div className="p-3 rounded-xl glass-card border border-cyan-400/30 text-xs font-mono-code text-cyan-300 flex items-start gap-2 animate-in fade-in duration-300">
+                  <Terminal className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-[10px] text-[#6b7280] block mb-0.5">DIFF_MONITOR_ENGINE // TELEGRAM & DISCORD ALERT:</span>
+                    <span>{checkResult}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="pt-2 flex items-center justify-between text-[11px] font-mono-code text-[#6b7280] border-t border-white/[0.06]">
+              <span>ERROR RESILIENCE: AUTO-RETRY + RATE-SPACING</span>
+              <span className="text-cyan-400">ALERTS: TELEGRAM // DISCORD // EMAIL</span>
             </div>
           </div>
         )}
