@@ -37,7 +37,7 @@ ABOUT EKAM SINGH:
 - Primary Focus: Creative frontend engineering, WebGL/GLSL fluid shaders, full-stack systems, applied AI, and hackathon prototypes.
 - Contact Email: ekamsingh1808@gmail.com
 - GitHub Profile: https://github.com/ekamsingh0001-esb
-- LinkedIn Profile: Ekam Singh (https://www.linkedin.com/in/ekam-singh)
+- LinkedIn Profile: Ekam Singh (https://www.linkedin.com/in/ekam-singh-28333b285/?isSelfProfile=true)
 
 ALL VERIFIED SOFTWARE PROJECTS & EXACT REPOSITORIES:
 1. Tick — Employee Output & Performance Intelligence
@@ -193,7 +193,7 @@ His main GitHub profile is [github.com/ekamsingh0001-esb](https://github.com/eka
     return `You can reach Ekam directly via:
 - **Email**: [ekamsingh1808@gmail.com](mailto:ekamsingh1808@gmail.com)
 - **GitHub**: [github.com/ekamsingh0001-esb](https://github.com/ekamsingh0001-esb)
-- **LinkedIn**: [Ekam Singh](https://www.linkedin.com/in/ekam-singh)
+- **LinkedIn**: [Ekam Singh](https://www.linkedin.com/in/ekam-singh-28333b285/?isSelfProfile=true)
 - Or dispatch a message directly through the **Contact** page on this portfolio!`;
   }
 

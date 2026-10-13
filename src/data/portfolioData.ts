@@ -11,7 +11,7 @@ export const PERSONAL_INFO = {
   email: 'ekamsingh1808@gmail.com',
   github: 'https://github.com/ekamsingh0001-esb',
   githubUsername: 'ekamsingh0001-esb',
-  linkedin: 'https://www.linkedin.com/in/ekam-singh',
+  linkedin: 'https://www.linkedin.com/in/ekam-singh-28333b285/?isSelfProfile=true',
   linkedinName: 'Ekam Singh',
   headline: "Building Digital Experiences. Exploring What's Next.",
   bio: 'B.Tech CSE student at VIT Vellore interested in web design, interactive experiences, technology, and innovation. Blending systems engineering precision with fluid sensory interfaces.',

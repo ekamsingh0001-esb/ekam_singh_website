@@ -1,0 +1,1 @@
+# Netlify serverless functions directory

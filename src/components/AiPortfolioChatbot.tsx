@@ -105,7 +105,7 @@ export const AiPortfolioChatbot: React.FC<AiPortfolioChatbotProps> = ({ onRouteC
       } else if (q.includes('cert') || q.includes('hpe') || q.includes('iit')) {
         reply = "Ekam holds verified credentials including:\n- **Hewlett Packard Enterprise (HPE)** Software Engineering Job Simulation via Forage (RESTful web services & unit testing).\n- **Vigyantram & Enactus IIT Delhi** Jr. Artificial Intelligence Scientist Summer Camp.\n- **Avishkaar** Android App Development Workshop.\n- **HT Code-a-thon** (Hindustan Times & IBM / Delhi Govt).";
       } else if (q.includes('contact') || q.includes('email') || q.includes('hire')) {
-        reply = "You can contact Ekam directly at **ekamsingh1808@gmail.com** or connect with him on LinkedIn ([Ekam Singh](https://www.linkedin.com/in/ekam-singh)) and GitHub ([ekamsingh0001-esb](https://github.com/ekamsingh0001-esb)).";
+        reply = "You can contact Ekam directly at **ekamsingh1808@gmail.com** or connect with him on LinkedIn ([Ekam Singh](https://www.linkedin.com/in/ekam-singh-28333b285/?isSelfProfile=true)) and GitHub ([ekamsingh0001-esb](https://github.com/ekamsingh0001-esb)).";
       } else {
         reply = "I'm **EKAM.AI**, the portfolio assistant for Ekam Singh (B.Tech CSE at VIT Vellore). Ask me about his software projects (**Tick**, **StudySync**, **CalmPulse**, **Offline AI**, **Synapse Engine**), his certifications, or reach out to him at **ekamsingh1808@gmail.com**.";
       }
