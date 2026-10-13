@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { DollarNotesBackground } from "./components/DollarNotesBackground";
 import { PageRoute, ProjectItem, CertificateItem } from './types';
-import { DollarNotesBackground } from './components/DollarNotesBackground';
+import { FluidShaderCanvas } from './components/FluidShaderCanvas';
 import { Navbar } from './components/Navbar';
 import { NavDrawer } from './components/NavDrawer';
 import { BottomNav } from './components/BottomNav';
@@ -83,8 +84,9 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-[#07080d] text-[#e3e2e8] flex flex-col justify-between selection:bg-cyan-400 selection:text-[#07080d]">
       {/* =================================================================== */}
-      {/* 1. DRIFTING 3D DOLLAR CURRENCY NOTES (Subdued Brightness)           */}
+      {/* 1. SIGNATURE INTERACTIVE FLUID SHADER & AMBIENT NOTES (Persistent)  */}
       {/* =================================================================== */}
+      <FluidShaderCanvas />
       <DollarNotesBackground />
 
       {/* =================================================================== */}
