@@ -1,0 +1,22 @@
+# Netlify Configuration for Single Page Application (Vite + React)
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Single Page App rewrite: routes all client paths to /index.html with status 200
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Cache control and MIME type headers for production assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"

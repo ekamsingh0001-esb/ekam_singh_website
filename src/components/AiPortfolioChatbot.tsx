@@ -61,7 +61,7 @@ export const AiPortfolioChatbot: React.FC<AiPortfolioChatbotProps> = ({ onRouteC
     setIsLoading(true);
 
     try {
-      // Call backend /api/chat
+      // Call backend /api/chat if available
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -71,8 +71,9 @@ export const AiPortfolioChatbot: React.FC<AiPortfolioChatbotProps> = ({ onRouteC
         }),
       });
 
-      if (!response.ok) {
-        throw new Error('API returned error');
+      const contentType = response.headers.get('content-type') || '';
+      if (!response.ok || !contentType.includes('application/json')) {
+        throw new Error('API unavailable or returned static page');
       }
 
       const data = await response.json();
@@ -84,16 +85,39 @@ export const AiPortfolioChatbot: React.FC<AiPortfolioChatbotProps> = ({ onRouteC
       };
       setMessages((prev) => [...prev, assistantMsg]);
       audioTelemetry.playChime(520, 680, 'sine', 0.1);
-    } catch (err) {
-      console.warn('Chat request failed, using local dossier fallback:', err);
-      // Fallback
+    } catch {
+      // Offline/Static Netlify Fallback with rich portfolio intelligence
+      const q = query.toLowerCase();
+      let reply = '';
+
+      if (q.includes('tick')) {
+        reply = "**Tick** is an enterprise hackathon platform for employee output & performance intelligence.\n\n- **Functionality**: Automatically compiles output sheets showing work completed throughout custom sprint periods and provides constructive growth advice.\n- **Tech Stack**: React, TypeScript, Node.js, Tailwind CSS, REST APIs, Analytics Engine.\n- **Repository**: [https://github.com/Vedant-Rajgaria/Tick.git](https://github.com/Vedant-Rajgaria/Tick.git)";
+      } else if (q.includes('studysync')) {
+        reply = "**StudySync** is a student focus and academic score booster application built for Vinhack.\n\n- **Functionality**: Helps students enter deep flow sessions, avoid cognitive distractions, and measurably boost exam scores by +18%.\n- **Tech Stack**: React, TypeScript, Tailwind CSS, Pomodoro / Flow Engine, Web Audio.\n- **Repository**: [https://github.com/vengala69/Vinhack.git](https://github.com/vengala69/Vinhack.git)";
+      } else if (q.includes('calmpulse') || q.includes('stress')) {
+        reply = "**CalmPulse** is an interactive stress relief and mental wellness web application.\n\n- **Functionality**: Decompresses students and developers with 4-7-8 breathing cycles, interactive WebGL fluid particles, and ambient soundscapes.\n- **Tech Stack**: React, TypeScript, WebGL / Canvas, Web Audio Synthesizer.\n- **Repository**: [https://github.com/vengala69/Vinhack.git](https://github.com/vengala69/Vinhack.git)";
+      } else if (q.includes('offline ai') || q.includes('offline')) {
+        reply = "**Offline AI** is an on-device local neural engine.\n\n- **Functionality**: Executes quantized models 100% locally on user hardware without internet, cloud APIs, or latency.\n- **Tech Stack**: Python, ONNX Runtime, WebLLM / GGUF, Quantization, Zero Cloud API.\n- **Repository**: [https://github.com/ekamsingh0001-esb/offline-ai.git](https://github.com/ekamsingh0001-esb/offline-ai.git)";
+      } else if (q.includes('synapse') || q.includes('shader') || q.includes('webgl')) {
+        reply = "**Synapse Engine** is an experimental AI web experience.\n\n- **Functionality**: Features real-time WebGL fluid displacement shaders, RGB chromatic aberration splitting, and reactive neural node mapping at 60 FPS.\n- **Tech Stack**: WebGL 2, GLSL Shaders, Three.js, React, TypeScript.\n- **Repository**: [https://github.com/ekamsingh0001-esb/Synapse-Engine-AI-Web-Experience.git](https://github.com/ekamsingh0001-esb/Synapse-Engine-AI-Web-Experience.git)";
+      } else if (q.includes('who is') || q.includes('about') || q.includes('ekam')) {
+        reply = "**Ekam Singh** is a B.Tech Computer Science and Engineering student at **VIT Vellore** (Batch of 2026), originally from South Delhi. He specializes in creative web engineering, WebGL shaders, full-stack systems, and hackathon prototypes.";
+      } else if (q.includes('cert') || q.includes('hpe') || q.includes('iit')) {
+        reply = "Ekam holds verified credentials including:\n- **Hewlett Packard Enterprise (HPE)** Software Engineering Job Simulation via Forage (RESTful web services & unit testing).\n- **Vigyantram & Enactus IIT Delhi** Jr. Artificial Intelligence Scientist Summer Camp.\n- **Avishkaar** Android App Development Workshop.\n- **HT Code-a-thon** (Hindustan Times & IBM / Delhi Govt).";
+      } else if (q.includes('contact') || q.includes('email') || q.includes('hire')) {
+        reply = "You can contact Ekam directly at **ekamsingh1808@gmail.com** or connect with him on LinkedIn ([Ekam Singh](https://www.linkedin.com/in/ekam-singh)) and GitHub ([ekamsingh0001-esb](https://github.com/ekamsingh0001-esb)).";
+      } else {
+        reply = "I'm **EKAM.AI**, the portfolio assistant for Ekam Singh (B.Tech CSE at VIT Vellore). Ask me about his software projects (**Tick**, **StudySync**, **CalmPulse**, **Offline AI**, **Synapse Engine**), his certifications, or reach out to him at **ekamsingh1808@gmail.com**.";
+      }
+
       const assistantMsg: ChatMessage = {
         id: `assistant-${Date.now()}`,
         role: 'assistant',
-        text: "Ekam Singh is a B.Tech CSE student at VIT Vellore from South Delhi, passionate about creative web engineering, AI architectures, and hackathons. You can also reach him directly at ekamsingh1808@gmail.com.",
+        text: reply,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, assistantMsg]);
+      audioTelemetry.playChime(520, 680, 'sine', 0.1);
     } finally {
       setIsLoading(false);
     }

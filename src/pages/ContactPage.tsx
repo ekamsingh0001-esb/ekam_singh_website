@@ -130,22 +130,59 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onShowToast }) => {
         }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Server rejected transmission.');
+      const contentType = response.headers.get('content-type') || '';
+      if (response.ok && contentType.includes('application/json')) {
+        const result = await response.json();
+        setSubmittedResult(result);
+        setFormStatus('success');
+        audioTelemetry.playChime(580, 880, 'sine', 0.2);
+        onShowToast('Message dispatched & securely routed to Ekam Singh!');
+        setFormData({ name: '', email: '', subject: '', message: '', honeypot: '' });
+        fetchTransmissions();
+        return;
       }
 
-      const result = await response.json();
-      setSubmittedResult(result);
+      // Static Netlify Fallback: Direct FormSubmit dispatch or 1-click mailto
+      const mailtoUrl = `mailto:${encodeURIComponent(PERSONAL_INFO.email)}?subject=${encodeURIComponent(
+        `[Portfolio] ${formData.subject}`
+      )}&body=${encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+      )}`;
+
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+        PERSONAL_INFO.email
+      )}&su=${encodeURIComponent(`[Portfolio] ${formData.subject}`)}&body=${encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+      )}`;
+
+      setSubmittedResult({
+        mailtoUrl,
+        gmailUrl,
+        recipient: PERSONAL_INFO.email,
+        deliveryStatus: 'forwarding_queued',
+        deliveryNote: 'Transmission configured. You can send directly via Gmail or Mail client below.',
+      });
       setFormStatus('success');
       audioTelemetry.playChime(580, 880, 'sine', 0.2);
-      onShowToast('Message dispatched & securely routed to Ekam Singh!');
+      onShowToast('Message prepared for Ekam Singh!');
       setFormData({ name: '', email: '', subject: '', message: '', honeypot: '' });
-      fetchTransmissions();
     } catch (err: any) {
-      console.error('Contact submit error:', err);
-      setFormStatus('error');
-      setErrorMessage(err.message || 'Transmission failed. You can send directly via the Gmail button below.');
+      console.warn('Contact submit notice:', err);
+      // Even if network fails, provide 1-click Gmail and mailto fallback
+      const mailtoUrl = `mailto:${encodeURIComponent(PERSONAL_INFO.email)}?subject=${encodeURIComponent(
+        `[Portfolio] ${formData.subject}`
+      )}&body=${encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+      )}`;
+
+      setSubmittedResult({
+        mailtoUrl,
+        recipient: PERSONAL_INFO.email,
+        deliveryStatus: 'logged_locally',
+        deliveryNote: 'Ready for 1-click dispatch directly to ekamsingh1808@gmail.com.',
+      });
+      setFormStatus('success');
+      onShowToast('Ready for 1-click dispatch!');
     }
   };
 

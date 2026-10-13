@@ -11,16 +11,22 @@ export const FluidShaderCanvas: React.FC<FluidShaderCanvasProps> = ({ className 
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const gl = canvas.getContext('webgl', {
-      alpha: true,
-      antialias: false,
-      depth: false,
-      stencil: false,
-      powerPreference: 'high-performance',
-    });
+    let gl: WebGLRenderingContext | null = null;
+    try {
+      gl = canvas.getContext('webgl', {
+        alpha: true,
+        antialias: false,
+        depth: false,
+        stencil: false,
+        powerPreference: 'high-performance',
+      }) || (canvas.getContext('experimental-webgl') as WebGLRenderingContext | null);
+    } catch (e) {
+      console.warn('WebGL initialization exception, using fallback backdrop:', e);
+      return;
+    }
 
     if (!gl) {
-      console.warn('WebGL not supported, falling back to 2D gradient.');
+      console.warn('WebGL not supported on this device/browser, using fallback backdrop.');
       return;
     }
 
@@ -341,9 +347,8 @@ export const FluidShaderCanvas: React.FC<FluidShaderCanvasProps> = ({ className 
       const vx = (mouse.x - prevMouse.x) * 2.2;
       const vy = (mouse.y - prevMouse.y) * 2.2;
       velocity.x += (vx - velocity.x) * 0.22;
-      velocity.y += (vy - velocity.y) * 0.22;
-
-      gl.useProgram(program);
+      try {
+        gl.useProgram(program);
 
       gl.uniform2f(uResLoc, width, height);
       gl.uniform1f(uTimeLoc, elapsedSec);
@@ -365,12 +370,19 @@ export const FluidShaderCanvas: React.FC<FluidShaderCanvasProps> = ({ className 
       }
       gl.uniform4fv(uRipplesLoc, rippleData);
 
-      gl.drawArrays(gl.TRIANGLES, 0, 6);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+      } catch (err) {
+        console.warn('WebGL render cycle error:', err);
+      }
 
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    try {
+      render();
+    } catch (e) {
+      console.warn('Could not start WebGL render loop:', e);
+    }
 
     return () => {
       cancelAnimationFrame(animationFrameId);
@@ -379,21 +391,34 @@ export const FluidShaderCanvas: React.FC<FluidShaderCanvasProps> = ({ className 
       window.removeEventListener('touchmove', handlePointerMove);
       window.removeEventListener('mousedown', handlePointerDown);
       window.removeEventListener('touchstart', handlePointerDown);
-      if (positionBuffer) gl.deleteBuffer(positionBuffer);
-      if (program) gl.deleteProgram(program);
-      if (vertexShader) gl.deleteShader(vertexShader);
-      if (fragmentShader) gl.deleteShader(fragmentShader);
+      try {
+        if (positionBuffer && gl) gl.deleteBuffer(positionBuffer);
+        if (program && gl) gl.deleteProgram(program);
+        if (vertexShader && gl) gl.deleteShader(vertexShader);
+        if (fragmentShader && gl) gl.deleteShader(fragmentShader);
+      } catch {
+        // Safe context disposal
+      }
     };
   }, []);
 
   return (
-    <div className={`fixed inset-0 pointer-events-none z-0 overflow-hidden ${className}`}>
+    <div className={`fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#07080d] ${className}`}>
+      {/* Background ambient color glow fallback in case WebGL is unavailable */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(99,102,241,0.22),rgba(7,8,13,0))]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_80%_70%,rgba(34,211,238,0.18),rgba(7,8,13,0))]" />
+
       <canvas
         ref={canvasRef}
         className="w-full h-full block opacity-75 sm:opacity-80"
       />
       {/* Contrast scrim and vignette to ensure all text is sharply readable */}
-      <div className="absolute inset-0 bg-radial-gradient from-[#07080d]/20 via-[#07080d]/50 to-[#07080d]/85 pointer-events-none" />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle at center, rgba(7, 8, 13, 0.2) 0%, rgba(7, 8, 13, 0.5) 60%, rgba(7, 8, 13, 0.85) 100%)',
+        }}
+      />
     </div>
   );
 };
